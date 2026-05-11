@@ -1,7 +1,7 @@
 # The Torchbearer
 
-**Student Name:** ___________________________
-**Student ID:** ___________________________
+**Student Name:** Mandy Liu
+**Student ID:** 129961283
 **Course:** CS 460 – Algorithms | Spring 2026
 
 > This README is your project documentation. Write it the way a developer would document
@@ -17,13 +17,15 @@
 > per question. Each bullet should be 1-2 sentences max.
 
 - **Why a single shortest-path run from S is not enough:**
-  _Your answer here._
+  _A single shortest-path run from S is not enough because each relic chamber in M must be visited once, 
+  and the shorter path between two relic chambers can involve going through multiple different chambers.
+  A shortest-path run opts to choose a more locally-optimal solution and not consider a globally optimal solution.
 
 - **What decision remains after all inter-location costs are known:**
-  _Your answer here._
+  _After all inter-location costs are known, the decision to choose what order to connect the locations in to get the total lowest trail fuel cost remains.
 
 - **Why this requires a search over orders (one sentence):**
-  _Your answer here._
+  _This requires a search over orders, because you must consider all fuel costs and a globally optimal solution in order to find the total lowest trail fuel cost.
 
 ---
 
@@ -34,9 +36,8 @@
 > List the source node types as a bullet list. For each, one-line reason.
 
 | Source Node Type | Why it is a source |
-|---|---|
-| _node type_ | _one-line reason_ |
-| _node type_ | _one-line reason_ |
+| S | S is the starting location for the Torchbearer, so it is the first source node. |
+| M | M is a set of relic chamber locations the Torchbearer must visit, so to traverse from one relic chamber to another, each relic chamber visited becomes a source node. |
 
 ### Part 2b: Distance Storage
 
@@ -44,20 +45,20 @@
 
 | Property | Your answer |
 |---|---|
-| Data structure name | |
-| What the keys represent | |
-| What the values represent | |
-| Lookup time complexity | |
-| Why O(1) lookup is possible | |
+| Data structure name | 2D hash map |
+| What the keys represent | The hash map's keys represent pairs of (source node, destination node). |
+| What the values represent | The values represent the minimum fuel cost between the source and destination node. |
+| Lookup time complexity | O(1) |
+| Why O(1) lookup is possible | O(1) lookup is possible because hash maps use hash functions to access the memory addresses of the keys, resulting in a quick time complexity of O(1). |
 
 ### Part 2c: Precomputation Complexity
 
 > State the total complexity and show the arithmetic. Two to three lines max.
 
-- **Number of Dijkstra runs:** _your answer_
-- **Cost per run:** _your answer_
-- **Total complexity:** _your answer_
-- **Justification (one line):** _your answer_
+- **Number of Dijkstra runs:** _k + 1 Dijkstra runs, because there are k runs needed to find the shortest fuel cost between the M relic chambers, and then 1 more run to find the shortest fuel cost between the start location S and one of the relic chambers. 
+- **Cost per run:** _O(m log n)
+- **Total complexity:** _O((k+1) * m log n) = O(k * m log n)
+- **Justification (one line):** _There are k + 1 Dijkstra runs that need to be completed, and each run costs O(m log n), so multiplied together the 1 in k + 1 is overlooked as a constant, resulting in O(k * m log n).
 
 ---
 

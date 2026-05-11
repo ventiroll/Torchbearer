@@ -1,7 +1,7 @@
 # Development Log – The Torchbearer
 
-**Student Name:** ___________________________
-**Student ID:** ___________________________
+**Student Name:** Mandy Liu
+**Student ID:** 129961283
 
 > Instructions: Write at least four dated entries. Required entry types are marked below.
 > Two to five sentences per entry is sufficient. Write entries as you go, not all in one
@@ -10,12 +10,12 @@
 
 ---
 
-## Entry 1 – [Date]: Initial Plan
+## Entry 1 – [5/10]: Initial Plan
 
 > Required. Write this before writing any code. Describe your plan: what you will
 > implement first, what parts you expect to be difficult, and how you plan to test.
 
-_Your entry here._
+_I plan to implement a 2D hashmap to keep track of the graph and the fuel costs, and multiple (k + 1) Dijkstra's algorithm runs in order to find the total minimum fuel cost to traverse from start to exit location and visiting all relic chambers. I expect coding Dijkstra's and making sure all possible paths are being considered to be difficult, and I plan to test by using my own graph and seeing how my code executes using it.
 
 ---
 
