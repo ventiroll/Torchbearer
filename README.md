@@ -73,29 +73,29 @@
 > Do not copy the invariant text from the spec.
 
 - **For nodes already finalized (in S):**
-  _Your answer here._
+  _The invariant holds before each loop, because for nodes already finalized in S, for them to be added to S, the value contained for each node must be the shortest-path distance (by definition). Therefore, before each loop begins, every vertex v contained in S, dist[v] is the true shortest-path distance. 
 
 - **For nodes not yet finalized (not in S):**
-  _Your answer here._
+  _The invariant holds before each loop, because for nodes not yet finalized in S, each node's dist[] is the current estimate of shortest path distance (by definition). Since the current dist[] is simply an estimate, therefore, at the beginning of each iteration, for nodes not finalized in S, their vertices u and the dist[u] must be the shortest known/estimate distance. 
 
 ### Part 3b: Why Each Phase Holds
 
 > One to two bullets per phase. Maintenance must mention nonnegative edge weights.
 
 - **Initialization : why the invariant holds before iteration 1:**
-  _Your answer here._
+  _Before the first iteration, no true shortest-path distances for any nodes are known because the loop has not iterated yet. Therefore, no nodes are finalized in S yet, and so for every vertex v contained in S, dist[v] is their true shortest-path holds true because there are no vertices in S. Similarly, no true short-path distances are known, so for all other nodes not in S, dist[] merely holds the current known shortest distance for each vertice, and the invariant holds true.
 
 - **Maintenance : why finalizing the min-dist node is always correct:**
-  _Your answer here._
+  _Finalizing the min-dist node is always correct, because for a node to be finalized in S, the value contained in dist[] must be the true shortest-path distance by definition. For a node's minimum distance to be known, every possible path must be explored, and even though the edge weights can be non-negative, it is essential to explore every path to be able to confidently name a true shortest-path distance. Therefore, finalizing the node when the minimum possible distance cost is known is correct. 
 
 - **Termination : what the invariant guarantees when the algorithm ends:**
-  _Your answer here._
+  _The invariant guarantees that when the algorithm ends, at the beginning of the next iteration, S will contain all the nodes with true shortest-path distances that are known, and all the other nodes not contained in S will contain the value of the current known shortest distance. Therefore, when the algorithm terminates, the loop contents will not execute, so the invariant remains true.
 
 ### Part 3c: Why This Matters for the Route Planner
 
 > One sentence connecting correct distances to correct routing decisions.
 
-_Your answer here._
+_Connecting correct distances to S allows the Torchbearer to plan ahead and correctly choose the way to traverse the paths using the minimum fuel cost; otherwise, having incorrect "shortest" distances in S could lead to longer paths and running out of fuel. 
 
 ---
 
@@ -106,7 +106,7 @@ _Your answer here._
 > State the failure mode. Then give a concrete counter-example using specific node names
 > or costs (you may use the illustration example from the spec). Three to five bullets.
 
-- **The failure mode:** _Your answer here._
+- **The failure mode:** _The failure mode is solely considering locally optimal solutions and where greedy fails is to consider shorter paths that may involve traversing across multiple nodes.
 - **Counter-example setup:** _Your answer here._
 - **What greedy picks:** _Your answer here._
 - **What optimal picks:** _Your answer here._

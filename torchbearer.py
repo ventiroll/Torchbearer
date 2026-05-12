@@ -2,8 +2,8 @@
 CS 460 – Algorithms: Final Programming Assignment
 The Torchbearer
 
-Student Name: ___________________________
-Student ID:   ___________________________
+Student Name: Mandy Liu
+Student ID:   129961283
 
 INSTRUCTIONS
 ------------
@@ -34,7 +34,7 @@ def explain_problem():
 
     TODO
     """
-    return "TODO"
+    return "A single shortest-path run from S is not enough because each relic chamber in M must be visited once, and the shorter path between two relic chambers can involve going through multiple different chambers. A shortest-path run opts to choose a more locally-optimal solution and not consider a globally optimal solution. After all inter-location costs are known, the decision to choose what order to connect the locations in to get the total lowest trail fuel cost remains. This requires a search over orders, because you must consider all fuel costs and a globally optimal solution in order to find the total lowest trail fuel cost."
 
 
 # =============================================================================
@@ -56,7 +56,7 @@ def select_sources(spawn, relics, exit_node):
 
     TODO
     """
-    pass
+    return list({spawn, *relics})
 
 
 def run_dijkstra(graph, source):
@@ -75,7 +75,21 @@ def run_dijkstra(graph, source):
 
     TODO
     """
-    pass
+    dist = {node: float('inf') for node in graph}
+    dist[source] = 0
+    heap = [(0, source)]
+
+    while heap:
+        cost, u = heapq.heappop(heap)
+        if cost > dist[u]:
+            continue
+        for v, weight in graph.get(u, []):
+            new_cost = cost + weight
+            if new_cost < dist[v]:
+                dist[v] = new_cost
+                heapq.heappush(heap, (new_cost, v))
+
+    return dist
 
 
 def precompute_distances(graph, spawn, relics, exit_node):
@@ -95,7 +109,8 @@ def precompute_distances(graph, spawn, relics, exit_node):
 
     TODO
     """
-    pass
+    sources = select_sources(spawn, relics, exit_node)
+    return {source: run_dijkstra(graph, source) for source in sources}
 
 
 # =============================================================================

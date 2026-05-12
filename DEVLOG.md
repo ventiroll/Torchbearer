@@ -19,12 +19,12 @@ _I plan to implement a 2D hashmap to keep track of the graph and the fuel costs,
 
 ---
 
-## Entry 2 – [Date]: [Short description]
+## Entry 2 – [5/11]: Initial Problem Set Up & Coding
 
 > Required. At least one entry must describe a bug, wrong assumption, or design change
 > you encountered. Describe what went wrong and how you resolved it.
 
-_Your entry here._
+_I went in depth into the algorithm's loop invariant and why greedy fails. I also reflected the selecting sources function as well as the precomputing distances, and wrote a function for running Dijkstra's algorithm to eventually find the minimum fuel cost. I decided to use a heap for Dijkstra's to maintain a priority queue and surface the minimum cost closest node, and kept using a 2D hashmap for the vertices' distances.
 
 ---
 
