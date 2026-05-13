@@ -95,7 +95,7 @@
 
 > One sentence connecting correct distances to correct routing decisions.
 
-_Connecting correct distances to S allows the Torchbearer to plan ahead and correctly choose the way to traverse the paths using the minimum fuel cost; otherwise, having incorrect "shortest" distances in S could lead to longer paths and running out of fuel. 
+_Connecting correct distances to S allows the Torchbearer to plan ahead and correctly choose the way to traverse the paths using the minimum fuel cost; otherwise, having incorrect shortest distances in S could lead to longer paths and running out of fuel. 
 
 ---
 
@@ -106,17 +106,17 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 > State the failure mode. Then give a concrete counter-example using specific node names
 > or costs (you may use the illustration example from the spec). Three to five bullets.
 
-- **The failure mode:** _The failure mode is solely considering locally optimal solutions and where greedy fails is to consider shorter paths that may involve traversing across multiple nodes.
-- **Counter-example setup:** _Your answer here._
-- **What greedy picks:** _Your answer here._
-- **What optimal picks:** _Your answer here._
-- **Why greedy loses:** _Your answer here._
+- **The failure mode:** _The failure mode is solely considering locally optimal solutions and greedy always opts to choose the next nearest unvisited relic chamber, and fails is to consider shorter paths that may involve traversing across multiple further nodes.
+- **Counter-example setup:** {S, R1, R2, R3, T} Cost S to R1 is 1, cost S to R2 is 10, cost R1 to R2 is 50, cost R1 to R3 is 2, cost R2 to R3 is 2, cost from any node to exit T is free. 
+- **What greedy picks:** _Greedy picks S to R1 (next closest distance of 1), R1 to R3 (next closest distance of 2), R3 to R2 (next closest distance of 50), then to T for a total cost of 53. 
+- **What optimal picks:** _Optimal picks S to R2 (cost of 10), R2 to R3 (cost of 2), R3 to R1 (cost of 1), then to T for a total cost of 13. 
+- **Why greedy loses:** Greedy loses because it does not consider the total fuel cost of traversing all the relic chambers, and chose the path with the largest cost of 50. Picking an more optimal solution requires backtracking and keeping all the costs in mind.
 
 ### What the Algorithm Must Explore
 
 > One bullet. Must use the word "order."
 
-- _Your answer here._
+- _The algorithm must explore the order in which the Torchbearer will traverse from the start, every relic chamber, and the exit to get the minimum possible torch cost.
 
 ---
 
@@ -129,9 +129,9 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 
 | Component | Variable name in code | Data type | Description |
 |---|---|---|---|
-| Current location | | | |
-| Relics already collected | | | |
-| Fuel cost so far | | | |
+| Current location | currNode | node | Current location of the Torchbearer |
+| Relics already collected | visited | frozenset[node] | Unmodifiable set to keep track of locations already visited |
+| Fuel cost so far | fuelCost | int | Total cost of fuel cost spent by the Torchbearer traveling |
 
 ### Part 5b: Data Structure for Visited Relics
 
@@ -139,18 +139,18 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 
 | Property | Your answer |
 |---|---|
-| Data structure chosen | |
-| Operation: check if relic already collected | Time complexity: |
-| Operation: mark a relic as collected | Time complexity: |
-| Operation: unmark a relic (backtrack) | Time complexity: |
-| Why this structure fits | |
+| Data structure chosen | frozenset |
+| Operation: check if relic already collected | Time complexity: O(1), hash-based search |
+| Operation: mark a relic as collected | Time complexity: O(k), creates a new frozenset when new relic is collected |
+| Operation: unmark a relic (backtrack) | Time complexity: O(k), backtracking returns to previous frozenset and makes new one |
+| Why this structure fits | frozenset fits because its every state is self-contained and hashable, so searching for a collected relic is easy with O(1), and backtracking and marking as collected is simple with creating a new frozenset. |
 
 ### Part 5c: Worst-Case Search Space
 
 > Two bullets.
 
-- **Worst-case number of orders considered:** _Your answer (in terms of k)._
-- **Why:** _One-line justification._
+- **Worst-case number of orders considered:** _k!
+- **Why:** _Starting from the beginning, any of the k relic chambers can be visited, creating k choices for the Torchbearer, then k - 1 choices for the next relic chamber, and so forth, leading to k!.
 
 ---
 

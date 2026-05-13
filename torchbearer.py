@@ -127,7 +127,10 @@ def dijkstra_invariant_check():
 
     TODO
     """
-    return "TODO"
+    partA = "The invariant holds before each loop, because for nodes already finalized in S, for them to be added to S, the value contained for each node must be the shortest-path distance (by definition). Therefore, before each loop begins, every vertex v contained in S, dist[v] is the true shortest-path distance. The invariant holds before each loop, because for nodes not yet finalized in S, each node's dist[] is the current estimate of shortest path distance (by definition). Since the current dist[] is simply an estimate, therefore, at the beginning of each iteration, for nodes not finalized in S, their vertices u and the dist[u] must be the shortest known/estimate distance."
+    partB = "Before the first iteration, no true shortest-path distances for any nodes are known because the loop has not iterated yet. Therefore, no nodes are finalized in S yet, and so for every vertex v contained in S, dist[v] is their true shortest-path holds true because there are no vertices in S. Similarly, no true short-path distances are known, so for all other nodes not in S, dist[] merely holds the current known shortest distance for each vertice, and the invariant holds true. Finalizing the min-dist node is always correct, because for a node to be finalized in S, the value contained in dist[] must be the true shortest-path distance by definition. For a node's minimum distance to be known, every possible path must be explored, and even though the edge weights can be non-negative, it is essential to explore every path to be able to confidently name a true shortest-path distance. Therefore, finalizing the node when the minimum possible distance cost is known is correct. The invariant guarantees that when the algorithm ends, at the beginning of the next iteration, S will contain all the nodes with true shortest-path distances that are known, and all the other nodes not contained in S will contain the value of the current known shortest distance. Therefore, when the algorithm terminates, the loop contents will not execute, so the invariant remains true."
+    partC = "Connecting correct distances to S allows the Torchbearer to plan ahead and correctly choose the way to traverse the paths using the minimum fuel cost; otherwise, having incorrect shortest distances in S could lead to longer paths and running out of fuel."
+    return partA, partB, partC
 
 
 # =============================================================================
@@ -144,7 +147,8 @@ def explain_search():
 
     TODO
     """
-    return "TODO"
+    part4 = "- **The failure mode:** _The failure mode is solely considering locally optimal solutions and greedy always opts to choose the next nearest unvisited relic chamber, and fails is to consider shorter paths that may involve traversing across multiple further nodes. - **Counter-example setup:** {S, R1, R2, R3, T} Cost S to R1 is 1, cost S to R2 is 10, cost R1 to R2 is 50, cost R1 to R3 is 2, cost R2 to R3 is 2, cost from any node to exit T is free. - **What greedy picks:** _Greedy picks S to R1 (next closest distance of 1), R1 to R3 (next closest distance of 2), R3 to R2 (next closest distance of 50), then to T for a total cost of 53. - **What optimal picks:** _Optimal picks S to R2 (cost of 10), R2 to R3 (cost of 2), R3 to R1 (cost of 1), then to T for a total cost of 13. - **Why greedy loses:** Greedy loses because it does not consider the total fuel cost of traversing all the relic chambers, and chose the path with the largest cost of 50. Picking an more optimal solution requires backtracking and keeping all the costs in mind. The algorithm must explore the order in which the Torchbearer will traverse from the start, every relic chamber, and the exit to get the minimum possible torch cost."
+    return part4
 
 
 # =============================================================================

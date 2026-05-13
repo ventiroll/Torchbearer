@@ -28,9 +28,9 @@ _I went in depth into the algorithm's loop invariant and why greedy fails. I als
 
 ---
 
-## Entry 3 – [Date]: [Short description]
+## Entry 3 – [5/12]: Optimal Data Structure Initializing 
 
-_Your entry here._
+_I explored an counterexample of why greedy fails, the components of my search table, and the data structure I have chosen to track what relics have been collected, frozenset. With the choice of using frozenset now, instead of a 2D hashmap for keeping track of the vertices, I am now going to use a hashmap keyed by (node, frozenset) pairs to track true minimum distances.
 
 ---
 
