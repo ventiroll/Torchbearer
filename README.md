@@ -160,23 +160,24 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 
 > Three bullets.
 
-- **What is tracked:** _Your answer here._
-- **When it is used:** _Your answer here._
-- **What it allows the algorithm to skip:** _Your answer here._
+- **What is tracked:** _fuelCost, the currently known accumulated minimum total fuel cost spent by Torchbearer, is being tracked. 
+- **When it is used:** _With each recursive call, fuelCost is compared against the current cost, to see if there is a more optimal path to take with a smaller total fuel cost.
+- **What it allows the algorithm to skip:** _It allows the algorithm to skip any paths who have a bigger fuel cost than the currently known minimum cost, because any path with a bigger cost is not optimal.
 
 ### Part 6b: Lower Bound Estimation
 
 > Three bullets.
 
-- **What information is available at the current state:** _Your answer here._
-- **What the lower bound accounts for:** _Your answer here._
-- **Why it never overestimates:** _Your answer here._
+- **What information is available at the current state:** The Torchbearer's current location, the currently known accumulated minimum fuel cost, the set of unvisited relic chambers, and the set of shortest distances between two locations are all known at the current state.
+- **What the lower bound accounts for:** _The lower bound accounts for the minimum cost from the Torchbearer's current location to the exit, while traversing all the unvisited relics in between. 
+- **Why it never overestimates:** _It never overestimates because it operates based on using the known pre-computed minimum costs of all the paths, so the total path cost cannot be smaller than the individual costs. 
 
 ### Part 6c: Pruning Correctness
 
 > One to two bullets. Explain why pruning is safe.
 
-- _Your answer here._
+- _Pruning is safe because the lower bound never overestimates the remaining cost, and only opts to find the minimum total fuel cost, so the optimal solution survives. 
+- _The optimal solution will not be cut because the algorithm searches for a complete path with the minimum cost unless a smaller one is found, so the optimal solution will be fully explored always and not trigger the pruning. 
 
 ---
 

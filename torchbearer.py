@@ -130,7 +130,7 @@ def dijkstra_invariant_check():
     partA = "The invariant holds before each loop, because for nodes already finalized in S, for them to be added to S, the value contained for each node must be the shortest-path distance (by definition). Therefore, before each loop begins, every vertex v contained in S, dist[v] is the true shortest-path distance. The invariant holds before each loop, because for nodes not yet finalized in S, each node's dist[] is the current estimate of shortest path distance (by definition). Since the current dist[] is simply an estimate, therefore, at the beginning of each iteration, for nodes not finalized in S, their vertices u and the dist[u] must be the shortest known/estimate distance."
     partB = "Before the first iteration, no true shortest-path distances for any nodes are known because the loop has not iterated yet. Therefore, no nodes are finalized in S yet, and so for every vertex v contained in S, dist[v] is their true shortest-path holds true because there are no vertices in S. Similarly, no true short-path distances are known, so for all other nodes not in S, dist[] merely holds the current known shortest distance for each vertice, and the invariant holds true. Finalizing the min-dist node is always correct, because for a node to be finalized in S, the value contained in dist[] must be the true shortest-path distance by definition. For a node's minimum distance to be known, every possible path must be explored, and even though the edge weights can be non-negative, it is essential to explore every path to be able to confidently name a true shortest-path distance. Therefore, finalizing the node when the minimum possible distance cost is known is correct. The invariant guarantees that when the algorithm ends, at the beginning of the next iteration, S will contain all the nodes with true shortest-path distances that are known, and all the other nodes not contained in S will contain the value of the current known shortest distance. Therefore, when the algorithm terminates, the loop contents will not execute, so the invariant remains true."
     partC = "Connecting correct distances to S allows the Torchbearer to plan ahead and correctly choose the way to traverse the paths using the minimum fuel cost; otherwise, having incorrect shortest distances in S could lead to longer paths and running out of fuel."
-    return partA, partB, partC
+    return " ".join([partA, partB, partC])
 
 
 # =============================================================================
@@ -175,11 +175,14 @@ def find_optimal_route(dist_table, spawn, relics, exit_node):
 
     TODO
     """
-    pass
+    best = [float('inf'), []]
+    relics_remaining = frozenset(relics)
+    _explore(dist_table, spawn, relics_remaining, [], 0, exit_node, best)
+    return (best[0], best[1])
 
 
-def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
-             cost_so_far, exit_node, best):
+def _explore(dist_table, currNode, relics_remaining, relics_visited_order,
+             fuelCost, exit_node, best):
     """
     Recursive helper for find_optimal_route.
 
@@ -207,7 +210,50 @@ def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
     explaining why it is safe (cannot skip the optimal solution).
     This comment is graded.
     """
-    pass
+    
+    if fuelCost >= best[0]: # pruning, abandon if worse than best found 
+        return
+
+    if relics_remaining: # estimating lower bound
+        min_out = min(
+            dist_table[currNode].get(r, float('inf'))
+            for r in relics_remaining
+        )
+        min_to_exit = min(
+            dist_table[r].get(exit_node, float('inf'))
+            for r in relics_remaining
+        )
+        lower_bound = min_out + min_to_exit
+        if fuelCost + lower_bound >= best[0]:
+            return
+
+    if not relics_remaining: # base case: if all relics collected, then head to exit 
+        total = fuelCost + dist_table[currNode].get(exit_node, float('inf'))
+        if total < best[0]:
+            best[0] = total
+            best[1] = list(relics_visited_order)
+        return
+
+    for relic in relics_remaining: # recursive: try remaining relics 
+        edge_cost = dist_table[currNode].get(relic, float('inf'))
+        if edge_cost == float('inf'):
+            continue
+
+        # Move to relic
+        relics_visited_order.append(relic)
+        visited = relics_remaining - {relic}
+
+        _explore(
+            dist_table,
+            relic,                  # currNode
+            visited,                # relics_remaining
+            relics_visited_order,
+            fuelCost + edge_cost,   # fuelCost
+            exit_node,
+            best
+        )
+
+        relics_visited_order.pop() # backtracking
 
 
 # =============================================================================
@@ -231,7 +277,8 @@ def solve(graph, spawn, relics, exit_node):
 
     TODO
     """
-    pass
+    dist_table = precompute_distances(graph, spawn, relics, exit_node)
+    return find_optimal_route(dist_table, spawn, relics, exit_node)
 
 
 # =============================================================================

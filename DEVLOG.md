@@ -34,12 +34,12 @@ _I explored an counterexample of why greedy fails, the components of my search t
 
 ---
 
-## Entry 4 – [Date]: Post-Implementation Reflection
+## Entry 4 – [5/1 9 AM]: Post-Implementation Reflection
 
 > Required. Written after your implementation is complete. Describe what you would
 > change or improve given more time.
 
-_Your entry here._
+_I implemented a hashmap with frozenset nodes to keep track of minimum fuel costs. If given more time, I would want to add more tests for duplicate relics or disconnected graphs, or replace the backtracking with bitmask dynamic programming to improve the time complexity for larger graphs.
 
 ---
 
