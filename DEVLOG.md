@@ -12,17 +12,12 @@
 
 ## Entry 1 – [5/10]: Initial Plan
 
-> Required. Write this before writing any code. Describe your plan: what you will
-> implement first, what parts you expect to be difficult, and how you plan to test.
-
 _I plan to implement a 2D hashmap to keep track of the graph and the fuel costs, and multiple (k + 1) Dijkstra's algorithm runs in order to find the total minimum fuel cost to traverse from start to exit location and visiting all relic chambers. I expect coding Dijkstra's and making sure all possible paths are being considered to be difficult, and I plan to test by using my own graph and seeing how my code executes using it.
 
 ---
 
 ## Entry 2 – [5/11]: Initial Problem Set Up & Coding
 
-> Required. At least one entry must describe a bug, wrong assumption, or design change
-> you encountered. Describe what went wrong and how you resolved it.
 
 _I went in depth into the algorithm's loop invariant and why greedy fails. I also reflected the selecting sources function as well as the precomputing distances, and wrote a function for running Dijkstra's algorithm to eventually find the minimum fuel cost. I decided to use a heap for Dijkstra's to maintain a priority queue and surface the minimum cost closest node, and kept using a 2D hashmap for the vertices' distances.
 
@@ -34,27 +29,25 @@ _I explored an counterexample of why greedy fails, the components of my search t
 
 ---
 
-## Entry 4 – [5/1 9 AM]: Post-Implementation Reflection
+## Entry 4 – [5/14 9 AM]: Post-Implementation Reflection
 
-> Required. Written after your implementation is complete. Describe what you would
-> change or improve given more time.
 
 _I implemented a hashmap with frozenset nodes to keep track of minimum fuel costs. If given more time, I would want to add more tests for duplicate relics or disconnected graphs, or replace the backtracking with bitmask dynamic programming to improve the time complexity for larger graphs.
 
 ---
 
-## Final Entry – [Date]: Time Estimate
+## Final Entry – [5/14 5 PM]: Time Estimate
 
-> Required. Estimate minutes spent per part. Honesty is expected; accuracy is not graded.
+_I cleaned up my DEVLOG and README, added a few comments to my code, and did some final test runs.
 
 | Part | Estimated Hours |
 |---|---|
-| Part 1: Problem Analysis | |
-| Part 2: Precomputation Design | |
-| Part 3: Algorithm Correctness | |
-| Part 4: Search Design | |
-| Part 5: State and Search Space | |
-| Part 6: Pruning | |
-| Part 7: Implementation | |
-| README and DEVLOG writing | |
-| **Total** | |
+| Part 1: Problem Analysis | Half an hour/30 minutes |
+| Part 2: Precomputation Design | An hour/60 minutes |
+| Part 3: Algorithm Correctness | Half an hour/30 minutes |
+| Part 4: Search Design | Half an hour/30 minutes |
+| Part 5: State and Search Space | Half an hour/30 minutes |
+| Part 6: Pruning | Half an hour/30 minutes |
+| Part 7: Implementation | 5 hours/300 minutes |
+| README and DEVLOG writing | 1 hour/60 minutes |
+| **Total** | ~ 9.5 hours/570 minutes |

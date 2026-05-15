@@ -13,9 +13,6 @@
 
 ## Part 1: Problem Analysis
 
-> Document why this problem is not just a shortest-path problem. Three bullet points, one
-> per question. Each bullet should be 1-2 sentences max.
-
 - **Why a single shortest-path run from S is not enough:**
   _A single shortest-path run from S is not enough because each relic chamber in M must be visited once, 
   and the shorter path between two relic chambers can involve going through multiple different chambers.
@@ -33,15 +30,11 @@
 
 ### Part 2a: Source Selection
 
-> List the source node types as a bullet list. For each, one-line reason.
-
 | Source Node Type | Why it is a source |
 | S | S is the starting location for the Torchbearer, so it is the first source node. |
 | M | M is a set of relic chamber locations the Torchbearer must visit, so to traverse from one relic chamber to another, each relic chamber visited becomes a source node. |
 
 ### Part 2b: Distance Storage
-
-> Fill in the table. No prose required.
 
 | Property | Your answer |
 |---|---|
@@ -53,8 +46,6 @@
 
 ### Part 2c: Precomputation Complexity
 
-> State the total complexity and show the arithmetic. Two to three lines max.
-
 - **Number of Dijkstra runs:** _k + 1 Dijkstra runs, because there are k runs needed to find the shortest fuel cost between the M relic chambers, and then 1 more run to find the shortest fuel cost between the start location S and one of the relic chambers. 
 - **Cost per run:** _O(m log n)
 - **Total complexity:** _O((k+1) * m log n) = O(k * m log n)
@@ -64,13 +55,8 @@
 
 ## Part 3: Algorithm Correctness
 
-> Document your understanding of why Dijkstra produces correct distances.
-> Bullet points and short sentences throughout. No paragraphs.
 
 ### Part 3a: What the Invariant Means
-
-> Two bullets: one for finalized nodes, one for non-finalized nodes.
-> Do not copy the invariant text from the spec.
 
 - **For nodes already finalized (in S):**
   _The invariant holds before each loop, because for nodes already finalized in S, for them to be added to S, the value contained for each node must be the shortest-path distance (by definition). Therefore, before each loop begins, every vertex v contained in S, dist[v] is the true shortest-path distance. 
@@ -79,8 +65,6 @@
   _The invariant holds before each loop, because for nodes not yet finalized in S, each node's dist[] is the current estimate of shortest path distance (by definition). Since the current dist[] is simply an estimate, therefore, at the beginning of each iteration, for nodes not finalized in S, their vertices u and the dist[u] must be the shortest known/estimate distance. 
 
 ### Part 3b: Why Each Phase Holds
-
-> One to two bullets per phase. Maintenance must mention nonnegative edge weights.
 
 - **Initialization : why the invariant holds before iteration 1:**
   _Before the first iteration, no true shortest-path distances for any nodes are known because the loop has not iterated yet. Therefore, no nodes are finalized in S yet, and so for every vertex v contained in S, dist[v] is their true shortest-path holds true because there are no vertices in S. Similarly, no true short-path distances are known, so for all other nodes not in S, dist[] merely holds the current known shortest distance for each vertice, and the invariant holds true.
@@ -93,8 +77,6 @@
 
 ### Part 3c: Why This Matters for the Route Planner
 
-> One sentence connecting correct distances to correct routing decisions.
-
 _Connecting correct distances to S allows the Torchbearer to plan ahead and correctly choose the way to traverse the paths using the minimum fuel cost; otherwise, having incorrect shortest distances in S could lead to longer paths and running out of fuel. 
 
 ---
@@ -103,8 +85,6 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 
 ### Why Greedy Fails
 
-> State the failure mode. Then give a concrete counter-example using specific node names
-> or costs (you may use the illustration example from the spec). Three to five bullets.
 
 - **The failure mode:** _The failure mode is solely considering locally optimal solutions and greedy always opts to choose the next nearest unvisited relic chamber, and fails is to consider shorter paths that may involve traversing across multiple further nodes.
 - **Counter-example setup:** {S, R1, R2, R3, T} Cost S to R1 is 1, cost S to R2 is 10, cost R1 to R2 is 50, cost R1 to R3 is 2, cost R2 to R3 is 2, cost from any node to exit T is free. 
@@ -114,7 +94,6 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 
 ### What the Algorithm Must Explore
 
-> One bullet. Must use the word "order."
 
 - _The algorithm must explore the order in which the Torchbearer will traverse from the start, every relic chamber, and the exit to get the minimum possible torch cost.
 
@@ -124,9 +103,6 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 
 ### Part 5a: State Representation
 
-> Document the three components of your search state as a table.
-> Variable names here must match exactly what you use in torchbearer.py.
-
 | Component | Variable name in code | Data type | Description |
 |---|---|---|---|
 | Current location | currNode | node | Current location of the Torchbearer |
@@ -134,8 +110,6 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 | Fuel cost so far | fuelCost | int | Total cost of fuel cost spent by the Torchbearer traveling |
 
 ### Part 5b: Data Structure for Visited Relics
-
-> Fill in the table.
 
 | Property | Your answer |
 |---|---|
@@ -147,8 +121,6 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 
 ### Part 5c: Worst-Case Search Space
 
-> Two bullets.
-
 - **Worst-case number of orders considered:** _k!
 - **Why:** _Starting from the beginning, any of the k relic chambers can be visited, creating k choices for the Torchbearer, then k - 1 choices for the next relic chamber, and so forth, leading to k!.
 
@@ -158,7 +130,6 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 
 ### Part 6a: Best-So-Far Tracking
 
-> Three bullets.
 
 - **What is tracked:** _fuelCost, the currently known accumulated minimum total fuel cost spent by Torchbearer, is being tracked. 
 - **When it is used:** _With each recursive call, fuelCost is compared against the current cost, to see if there is a more optimal path to take with a smaller total fuel cost.
@@ -166,7 +137,6 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 
 ### Part 6b: Lower Bound Estimation
 
-> Three bullets.
 
 - **What information is available at the current state:** The Torchbearer's current location, the currently known accumulated minimum fuel cost, the set of unvisited relic chambers, and the set of shortest distances between two locations are all known at the current state.
 - **What the lower bound accounts for:** _The lower bound accounts for the minimum cost from the Torchbearer's current location to the exit, while traversing all the unvisited relics in between. 
@@ -174,7 +144,6 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 
 ### Part 6c: Pruning Correctness
 
-> One to two bullets. Explain why pruning is safe.
 
 - _Pruning is safe because the lower bound never overestimates the remaining cost, and only opts to find the minimum total fuel cost, so the optimal solution survives. 
 - _The optimal solution will not be cut because the algorithm searches for a complete path with the minimum cost unless a smaller one is found, so the optimal solution will be fully explored always and not trigger the pruning. 
@@ -183,6 +152,5 @@ _Connecting correct distances to S allows the Torchbearer to plan ahead and corr
 
 ## References
 
-> Bullet list. If none beyond lecture notes, write that.
-
-- _Your references here._
+- _Lecture notes 
+- GeeksforGeeks. (2026, January 21). Dijkstra's algorithm. https://www.geeksforgeeks.org/dsa/dijkstras-shortest-path-algorithm-greedy-algo-7/

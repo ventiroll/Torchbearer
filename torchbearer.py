@@ -56,7 +56,7 @@ def select_sources(spawn, relics, exit_node):
 
     TODO
     """
-    return list({spawn, *relics})
+    return list({spawn, *relics}) # return list of unique nodes
 
 
 def run_dijkstra(graph, source):
@@ -80,12 +80,12 @@ def run_dijkstra(graph, source):
     heap = [(0, source)]
 
     while heap:
-        cost, u = heapq.heappop(heap)
+        cost, u = heapq.heappop(heap) # creating heap 
         if cost > dist[u]:
             continue
         for v, weight in graph.get(u, []):
             new_cost = cost + weight
-            if new_cost < dist[v]:
+            if new_cost < dist[v]: # if found a shorter path to v through u, update dist
                 dist[v] = new_cost
                 heapq.heappush(heap, (new_cost, v))
 
@@ -109,7 +109,7 @@ def precompute_distances(graph, spawn, relics, exit_node):
 
     TODO
     """
-    sources = select_sources(spawn, relics, exit_node)
+    sources = select_sources(spawn, relics, exit_node) # get unique nodes to run Dijkstra's on
     return {source: run_dijkstra(graph, source) for source in sources}
 
 
@@ -176,7 +176,7 @@ def find_optimal_route(dist_table, spawn, relics, exit_node):
     TODO
     """
     best = [float('inf'), []]
-    relics_remaining = frozenset(relics)
+    relics_remaining = frozenset(relics) # using frozenset for remaining relic tracking 
     _explore(dist_table, spawn, relics_remaining, [], 0, exit_node, best)
     return (best[0], best[1])
 
@@ -239,8 +239,7 @@ def _explore(dist_table, currNode, relics_remaining, relics_visited_order,
         if edge_cost == float('inf'):
             continue
 
-        # Move to relic
-        relics_visited_order.append(relic)
+        relics_visited_order.append(relic) # move to relic
         visited = relics_remaining - {relic}
 
         _explore(
@@ -277,7 +276,7 @@ def solve(graph, spawn, relics, exit_node):
 
     TODO
     """
-    dist_table = precompute_distances(graph, spawn, relics, exit_node)
+    dist_table = precompute_distances(graph, spawn, relics, exit_node) # precompute distances for all relevant nodes
     return find_optimal_route(dist_table, spawn, relics, exit_node)
 
 
